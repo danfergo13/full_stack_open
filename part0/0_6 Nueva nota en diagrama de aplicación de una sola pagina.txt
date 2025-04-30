@@ -1,0 +1,33 @@
+sequenceDiagram
+    participant navegador
+    participant servidor
+
+    navegador->>servidor: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate servidor
+    servidor-->>navegador: Documento HTML
+    deactivate servidor
+
+    navegador->>servidor: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate servidor
+    servidor-->>navegador: Archivo CSS
+    deactivate servidor
+
+    navegador->>servidor: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    activate servidor
+    servidor-->>navegador: Archivo JavaScript
+    deactivate servidor
+
+    Note right of navegador: El navegador comienza a ejecutar el código JavaScript que obtiene el JSON del servidor
+
+    navegador->>servidor: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate servidor
+    servidor-->>navegador: [{ "content": "Hola Mundo", "date": "2025-04-30" }, ... ]
+    deactivate servidor
+
+    Note right of navegador: El navegador ejecuta la función callback que renderiza las notas
+
+    navegador->>servidor: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+    activate servidor
+    navegador-->>servidor: {"content":"Daniel Gómez Díaz was here - Single Page 0.6","date":"2025-04-30T16:08:20.964Z"}
+    servidor-->>navegador: 201 Created
+    deactivate servidor

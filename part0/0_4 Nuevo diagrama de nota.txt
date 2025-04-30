@@ -1,0 +1,42 @@
+sequenceDiagram
+    participant navegador
+    participant servidor
+
+    navegador->>servidor: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate servidor
+    servidor-->>navegador: Documento HTML
+    deactivate servidor
+
+    navegador->>servidor: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate servidor
+    servidor-->>navegador: Archivo CSS
+    deactivate servidor
+
+    navegador->>servidor: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    activate servidor
+    servidor-->>navegador: Archivo JavaScript
+    deactivate servidor
+
+    Note right of navegador: El navegador ejecuta el JS que solicita las notas
+
+    navegador->>servidor: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate servidor
+    servidor-->>navegador: [{ "content": "Hola Mundo", "date": "2025-04-30" }, ... ]
+    deactivate servidor
+
+    Note right of navegador: Se renderizan las notas en la página
+
+    navegador->>servidor: POST https://studies.cs.helsinki.fi/exampleapp/notes
+    activate servidor
+    navegador-->>servidor: {"content":"Daniel Gómez Díaz was here"}
+    servidor-->>navegador: 302 Found
+    deactivate servidor
+
+    Note right of navegador: El navegador sigue la redirección automáticamente
+
+    navegador->>servidor: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate servidor
+    servidor-->>navegador: Documento HTML
+    deactivate servidor
+
+    Note right of navegador: El ciclo comienza nuevamente (solicita CSS, JS y datos)
