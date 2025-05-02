@@ -1,9 +1,16 @@
 import { useState } from "react";
 
+const StatisticLine = ({ text, value, unidad = "" }) => (
+  <>
+    {text} {value} {unidad}
+    <br />
+  </>
+);
+
 const Statistics = ({ good, neutral, bad }) => {
   const total = good + neutral + bad;
-  const average = total > 0 ? (good * 1 + bad * -1) / total : 0;
-  const positivePercentage = total > 0 ? (good / total) * 100 : 0;
+  const promedio = total > 0 ? (good * 1 + bad * -1) / total : 0;
+  const porcentajePositivo = total > 0 ? (good / total) * 100 : 0;
 
   if (total === 0) {
     return <p>No feedback given</p>;
@@ -11,18 +18,12 @@ const Statistics = ({ good, neutral, bad }) => {
 
   return (
     <div>
-      good {good}
-      <br />
-      neutral {neutral}
-      <br />
-      bad {bad}
-      <br />
-      all {total}
-      <br />
-      average {average}
-      <br />
-      positive {positivePercentage} %
-      <br />
+      <StatisticLine text="good" value={good} />
+      <StatisticLine text="neutral" value={neutral} />
+      <StatisticLine text="bad" value={bad} />
+      <StatisticLine text="all" value={total} />
+      <StatisticLine text="average" value={promedio} />
+      <StatisticLine text="positive" value={porcentajePositivo} unidad="%" />
     </div>
   );
 };
